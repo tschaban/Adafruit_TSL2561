@@ -166,9 +166,11 @@ typedef enum {
 /**************************************************************************/
 class Adafruit_TSL2561_Unified : public Adafruit_Sensor {
 public:
+  Adafruit_TSL2561_Unified();
   Adafruit_TSL2561_Unified(uint8_t addr, int32_t sensorID = -1);
   boolean begin(void);
   boolean begin(TwoWire *theWire);
+  boolean begin(uint8_t addr, TwoWire *theWire);
   boolean init();
 
   /* TSL2561 Functions */

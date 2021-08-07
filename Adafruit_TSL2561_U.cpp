@@ -53,6 +53,15 @@
                     keep track if you have many sensors in use
 */
 /**************************************************************************/
+Adafruit_TSL2561_Unified::Adafruit_TSL2561_Unified() {
+  _tsl2561Initialised = false;
+  _tsl2561AutoGain = false;
+  _tsl2561IntegrationTime = TSL2561_INTEGRATIONTIME_13MS;
+  _tsl2561Gain = TSL2561_GAIN_1X;
+  _tsl2561SensorID = -1; // as per default in orginal constructor
+}
+
+
 Adafruit_TSL2561_Unified::Adafruit_TSL2561_Unified(uint8_t addr,
                                                    int32_t sensorID) {
   _addr = addr;
@@ -89,6 +98,22 @@ boolean Adafruit_TSL2561_Unified::begin() {
 */
 /**************************************************************************/
 boolean Adafruit_TSL2561_Unified::begin(TwoWire *theWire) {
+  _i2c = theWire;
+  _i2c->begin();
+  return init();
+}
+
+/**************************************************************************/
+/*!
+    @brief Initializes I2C and configures the sensor with provided I2C device
+           (call this function before doing anything else)
+    @param addr The I2C address this chip can be found on, 0x29, 0x39 or 0x49           
+    @param theWire A pointer to any I2C interface (e.g. &Wire1)
+    @returns True if sensor is found and initialized, false otherwise.
+*/
+/**************************************************************************/
+boolean Adafruit_TSL2561_Unified::begin(uint8_t addr, TwoWire *theWire) {
+    _addr = addr;
   _i2c = theWire;
   _i2c->begin();
   return init();
